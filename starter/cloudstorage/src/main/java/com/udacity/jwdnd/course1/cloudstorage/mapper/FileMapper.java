@@ -14,12 +14,15 @@ public interface FileMapper {
     int uploadFile(File file);
 
     //read
-    @Select("SELECT * FROM FILES where userid = #{userId}")
-    List<File> getFilesByUserId(Integer userId);
+    @Select("SELECT * FROM FILES WHERE userid = #{userId}")
+    List<File> getAllUserFiles(Integer userId);
+
+    @Select("SELECT * FROM FILES WHERE fileid = #{fileId} AND userid = #{userId}")
+    File getFile(Integer fileId, Integer userId);
 
     //update
 
     //delete
-    @Delete("DELETE FROM FILES WHERE fileid = #{fileId}")
-    void deleteFileById(Integer fileId);
+    @Delete("DELETE FROM FILES WHERE fileid = #{fileId} AND userid = #{userId}")
+    int deleteFileById(Integer fileId, Integer userId);
 }

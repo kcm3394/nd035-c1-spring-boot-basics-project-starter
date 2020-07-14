@@ -27,21 +27,9 @@ public class HomeController {
     public String getHomeView(Authentication authentication, Model model) {
         Integer userId = userService.getUser(authentication.getName()).getUserId();
 
-//        model.addAttribute("files", this.fileService.getFilesByUserId(userId));
+        model.addAttribute("files", this.fileService.getFilesByUserId(userId));
         model.addAttribute("notes", this.noteService.getNotesByUserId(userId));
         //credentials
         return "home";
     }
-
-//    @PostMapping("/upload")
-//    public String handleFileUpload(@RequestParam("fileUpload") MultipartFile fileUpload, Authentication authentication, @ModelAttribute File file, Model model) {
-//        User currUser = this.userService.getUserByUsername(authentication.getName());
-//
-//        if (!fileUpload.isEmpty()) {
-//            this.fileService.uploadFile(currUser, fileUpload);
-//            model.addAttribute("files", this.fileService.getAllFiles());
-//        }
-//
-//        return "home";
-//    }
 }
