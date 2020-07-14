@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,16 +28,14 @@ public class NoteController {
 
     @PostMapping
     public String createOrUpdateNotes(Authentication authentication, @ModelAttribute Note note, Model model) {
-        Integer userId = userService.getUser(authentication.getName()).getUserId();
-        logger.info("Passed in note id is " + note.getNoteId());
+        Integer userId = this.userService.getUser(authentication.getName()).getUserId();
         logger.info("Passed in note title is " + note.getTitle());
         logger.info("Passed in note description is " + note.getDescription());
-        logger.info("Passed in note user id is " + note.getUserId());
 
-        if (this.noteService.getNoteByNoteId(note.getNoteId()) != null) {
-            noteService.updateNote(note.getTitle(), note.getDescription(), note.getNoteId());
+        if (this.noteService.getNoteByNoteId(note.getNoteId(), userId) != null) {
+            this.noteService.updateNote(note.getTitle(), note.getDescription(), note.getNoteId(), userId);
         } else {
-            noteService.createNote(new Note(null, note.getTitle(), note.getDescription(), userId));
+            this.noteService.createNote(new Note(null, note.getTitle(), note.getDescription(), userId));
 
         }
         model.addAttribute("notes", this.noteService.getNotesByUserId(userId));
@@ -48,10 +43,14 @@ public class NoteController {
         return "result";
     }
 
-    @PostMapping("/delete")
-    public String deleteNote(@RequestParam Integer noteId, Model model) {
-        if (noteId > 0) {
-            //delete
+    @GetMapping("/delete/{noteId}")
+    public String deleteNote(@PathVariable Integer noteId, Authentication authentication, Model model) {
+        Integer userId = this.userService.getUser(authentication.getName()).getUserId();
+        int result = this.noteService.deleteNote(noteId, userId);
+        if (result > 0) {
+            model.addAttribute("resultSuccess", true);
+        } else {
+            model.addAttribute("resultError", "Note ID does not exist.");
         }
         return "result";
     }

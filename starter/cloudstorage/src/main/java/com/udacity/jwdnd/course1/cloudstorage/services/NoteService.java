@@ -16,19 +16,25 @@ public class NoteService {
     }
 
     public List<Note> getNotesByUserId(Integer userId) {
-        return noteMapper.getNotesByUserId(userId);
+        return noteMapper.getAllUserNotes(userId);
     }
 
-    public Note getNoteByNoteId(Integer noteId) {
-        return noteMapper.getNoteByNoteId(noteId);
+    public Note getNoteByNoteId(Integer noteId, Integer userId) {
+        return noteMapper.getNote(noteId, userId);
     }
 
     public int createNote(Note note) {
         return noteMapper.createNote(note);
     }
 
-    public int updateNote(String title, String description, Integer noteId) {
-        return noteMapper.updateNote(title, description, noteId);
+    public int updateNote(String title, String description, Integer noteId, Integer userId) {
+        return noteMapper.updateNote(title, description, noteId, userId);
     }
+
+    public int deleteNote(Integer noteId, Integer userId) {
+        return noteMapper.deleteNote(noteId, userId);
+    }
+
+
 
 }

@@ -78,8 +78,10 @@
                         <tr th:unless="${#lists.isEmpty(notes)}"
                             th:each="note:${notes}">
                             <td>
-                                <button type="button" th:onclick="javascript:showNoteModal([[${note}]])" class="btn btn-success">Edit</button>
-                                <a  th:href="@{/notes/delete(id=note.noteid)}" class="btn btn-danger">Delete</a>
+                                <button type="button" th:onclick="javascript:showNoteModal([[${note.noteId}]],[[${note.title}]],[[${note.description}]])"
+                                        class="btn btn-success">Edit
+                                </button>
+                                <a th:href="@{/notes/delete/{noteId}(noteId=${note.noteId})}" class="btn btn-danger">Delete</a>
                             </td>
                             <th th:text="${note.title}" scope="row">Example Note Title</th>
                             <td th:text="${note.description}">Example Note Description </td>
@@ -102,11 +104,11 @@
                                     <input type="hidden" name="noteId" id="note-id">
                                     <div class="form-group">
                                         <label for="note-title" class="col-form-label">Title</label>
-                                        <input type="text" name="noteTitle" class="form-control" id="note-title" maxlength="20" required>
+                                        <input type="text" name="title" class="form-control" id="note-title" maxlength="20" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="note-description" class="col-form-label">Description</label>
-                                        <textarea class="form-control" name="noteDescription" id="note-description" rows="5" maxlength="1000" required></textarea>
+                                        <textarea class="form-control" name="description" id="note-description" rows="5" maxlength="1000" required></textarea>
                                     </div>
                                     <button id="noteSubmit" type="submit" class="d-none"></button>
                                 </form>
@@ -195,10 +197,10 @@
 <!--For opening the note modal-->
 <script type="text/javascript">
     // For opening the note modal
-    function showNoteModal(noteId, noteTitle, noteDescription) {
+    function showNoteModal(noteId, title, description) {
         $('#note-id').val(noteId ? noteId : '');
-        $('#note-title').val(noteTitle ? noteTitle : '');
-        $('#note-description').val(noteDescription ? noteDescription : '');
+        $('#note-title').val(title ? title : '');
+        $('#note-description').val(description ? description : '');
         $('#noteModal').modal('show');
     }
 

@@ -4,3 +4,6 @@ INSERT INTO NOTES (notetitle, notedescription, userid) VALUES (?, ?, ? [42001-20
 2020-07-13 19:07:13 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO NOTES (NOTETITLE, NOTEDESCRIPTION, USERID) VALUES (?, ?, ?[*]"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, ~, !~, NOT, LIKE, ILIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
 INSERT INTO NOTES (notetitle, notedescription, userid) VALUES (?, ?, ? [42001-200]
+2020-07-14 12:32:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "NOTE" not found; SQL statement:
+UPDATE note SET notetitle=?, notedescription=? WHERE noteid = ? AND userid = ? [42102-200]
