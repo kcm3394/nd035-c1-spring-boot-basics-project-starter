@@ -27,17 +27,18 @@ public class NoteController {
     }
 
     @PostMapping
-    public String createOrUpdateNotes(Authentication authentication, @ModelAttribute Note note, Model model) {
-        Integer userId = this.userService.getUser(authentication.getName()).getUserId();
+    public String createOrUpdateNote(Authentication authentication, @ModelAttribute Note note, Model model) {
+        Integer userId = userService.getUser(authentication.getName()).getUserId();
+
         logger.info("Passed in note title is " + note.getTitle());
         logger.info("Passed in note description is " + note.getDescription());
 
-        if (this.noteService.getNoteByNoteId(note.getNoteId(), userId) != null) {
-            this.noteService.updateNote(note.getTitle(), note.getDescription(), note.getNoteId(), userId);
+        if (noteService.getNoteByNoteId(note.getNoteId(), userId) != null) {
+            noteService.updateNote(note.getTitle(), note.getDescription(), note.getNoteId(), userId);
         } else {
-            this.noteService.createNote(new Note(null, note.getTitle(), note.getDescription(), userId));
-
+            noteService.createNote(new Note(null, note.getTitle(), note.getDescription(), userId));
         }
+
         model.addAttribute("notes", this.noteService.getNotesByUserId(userId));
         model.addAttribute("resultSuccess", true);
         return "result";
@@ -45,13 +46,15 @@ public class NoteController {
 
     @GetMapping("/delete/{noteId}")
     public String deleteNote(@PathVariable Integer noteId, Authentication authentication, Model model) {
-        Integer userId = this.userService.getUser(authentication.getName()).getUserId();
-        int result = this.noteService.deleteNote(noteId, userId);
+        Integer userId = userService.getUser(authentication.getName()).getUserId();
+
+        int result = noteService.deleteNote(noteId, userId);
         if (result > 0) {
             model.addAttribute("resultSuccess", true);
         } else {
             model.addAttribute("resultError", "Note ID does not exist.");
         }
+
         return "result";
     }
 }
