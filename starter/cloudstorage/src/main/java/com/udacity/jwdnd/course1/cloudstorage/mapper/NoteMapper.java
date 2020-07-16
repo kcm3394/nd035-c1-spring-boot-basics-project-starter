@@ -17,9 +17,6 @@ public interface NoteMapper {
     @Select("SELECT * FROM NOTES WHERE userid = #{userId}")
     List<Note> getAllUserNotes(Integer userId);
 
-    @Select("SELECT * FROM NOTES WHERE noteid = #{noteId} AND userid = #{userId}")
-    Note getNote(Integer noteId, Integer userId);
-
     //update
     @Update("UPDATE NOTES SET notetitle=#{title}, notedescription=#{description} WHERE noteid = #{noteId} AND userid = #{userId}")
     int updateNote(String title, String description, Integer noteId, Integer userId);

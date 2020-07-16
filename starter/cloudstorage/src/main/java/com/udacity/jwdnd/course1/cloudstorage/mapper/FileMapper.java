@@ -20,7 +20,8 @@ public interface FileMapper {
     @Select("SELECT * FROM FILES WHERE fileid = #{fileId} AND userid = #{userId}")
     File getFile(Integer fileId, Integer userId);
 
-    //update
+    @Select(("SELECT * FROM FILES WHERE filename=#{fileName} AND userid=#{userId}"))
+    File getFileByName(String fileName, Integer userId);
 
     //delete
     @Delete("DELETE FROM FILES WHERE fileid = #{fileId} AND userid = #{userId}")

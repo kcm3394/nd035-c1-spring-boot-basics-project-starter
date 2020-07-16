@@ -15,16 +15,4 @@ public interface UserMapper {
     @Select("SELECT * FROM USERS WHERE username = #{username}")
     User getUserByUsername(String username);
 
-    @Select("SELECT * FROM USERS WHERE userid = #{userId}")
-    User getUserById(Integer userId);
-
-//    //update
-//    @Update("UPDATE user SET username=#{username}, password=#{password}, firstname=#{firstName}, lastname=#{lastName} WHERE userid=#{userId}")
-//    User updateUser(User user);
-//
-//
-//    //delete
-//    @Delete("DELETE FROM USERS WHERE userid = #{userId}")
-//    void deleteUserById(Integer userId);
-
 }

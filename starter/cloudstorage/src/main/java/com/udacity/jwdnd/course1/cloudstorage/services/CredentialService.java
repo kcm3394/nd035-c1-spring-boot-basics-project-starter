@@ -23,6 +23,7 @@ public class CredentialService {
         return this.credentialMapper.getAllUserCredentials(userId);
     }
 
+    //used in home.html to show decrypted password in modal
     public Credential getCredentialByCredentialId(Integer credentialId, Integer userId) {
         return credentialMapper.getCredential(credentialId, userId);
     }

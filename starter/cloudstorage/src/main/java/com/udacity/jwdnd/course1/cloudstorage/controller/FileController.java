@@ -31,15 +31,27 @@ public class FileController {
     @PostMapping
     public String uploadFile(@RequestParam("fileUpload") MultipartFile fileUpload, Authentication authentication, @ModelAttribute File file, Model model) {
         Integer userId = this.userService.getUser(authentication.getName()).getUserId();
-        int result = this.fileService.uploadFile(userId, fileUpload);
 
-        logger.info("Result of file mapper's upload file method is: " + result);
+        String resultError = null;
 
-        if (result > 0) {
+        if (!fileService.isFileNameAvailable(fileUpload.getOriginalFilename(), userId)) {
+            resultError = "This file name already exists.";
+        }
+
+        if (resultError == null) {
+            int result = this.fileService.uploadFile(userId, fileUpload);
+            logger.info("Result of file mapper's upload file method is: " + result);
+
+            if (result == 0) {
+                resultError = "There was an error uploading your file.";
+            }
+        }
+
+        if (resultError == null) {
             model.addAttribute("resultSuccess", true);
             model.addAttribute("files", this.fileService.getFilesByUserId(userId));
         } else {
-            model.addAttribute("resultError", "There was an error uploading your file.");
+            model.addAttribute("resultError", resultError);
         }
 
         return "result";

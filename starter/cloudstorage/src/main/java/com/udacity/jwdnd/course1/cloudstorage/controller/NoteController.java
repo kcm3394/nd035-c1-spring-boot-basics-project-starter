@@ -33,7 +33,7 @@ public class NoteController {
         logger.info("Passed in note title is " + note.getTitle());
         logger.info("Passed in note description is " + note.getDescription());
 
-        if (noteService.getNoteByNoteId(note.getNoteId(), userId) != null) {
+        if (note.getNoteId() != null) {
             noteService.updateNote(note.getTitle(), note.getDescription(), note.getNoteId(), userId);
         } else {
             noteService.createNote(new Note(null, note.getTitle(), note.getDescription(), userId));

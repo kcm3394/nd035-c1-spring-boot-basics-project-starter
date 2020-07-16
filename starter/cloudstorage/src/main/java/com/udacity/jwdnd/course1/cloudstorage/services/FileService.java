@@ -27,6 +27,10 @@ public class FileService {
         return fileMapper.getAllUserFiles(userId);
     }
 
+    public boolean isFileNameAvailable(String fileName, Integer userId) {
+        return fileMapper.getFileByName(fileName, userId) == null;
+    }
+
     public int uploadFile(Integer userId, MultipartFile fileUpload) {
         InputStream inputStream;
         byte[] data = new byte[0];

@@ -41,20 +41,5 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
-	@Test
-	void signupLogin() {
-		driver.get(baseUrl + "/signup");
-		SignupPage signupPage = new SignupPage(driver);
-		signupPage.signup("John", "Smith", "user", "password");
 
-//		String expectedUrl = baseUrl + "/login";
-//		Assertions.assertEquals(expectedUrl, signupPage.getLoginLinkUrl());
-
-		driver.get(baseUrl + "/login");
-		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login("user", "password");
-
-		String expectedUrl = baseUrl + "/home";
-		Assertions.assertEquals(expectedUrl, driver.getCurrentUrl());
-	}
 }
