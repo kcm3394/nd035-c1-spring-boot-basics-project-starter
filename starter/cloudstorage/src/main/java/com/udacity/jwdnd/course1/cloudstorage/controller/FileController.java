@@ -61,10 +61,14 @@ public class FileController {
     public ResponseEntity<byte[]> viewAndDownloadFile(@PathVariable Integer fileId, Authentication authentication) {
         Integer userId = this.userService.getUser(authentication.getName()).getUserId();
         File file = this.fileService.getFileByFileId(fileId, userId);
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(file.getContentType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
-                .body(file.getFileData());
+        if (file != null) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(file.getContentType()))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
+                    .body(file.getFileData());
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
 
     @GetMapping("/delete/{fileId}")
