@@ -57,6 +57,7 @@ public class FileController {
         return "result";
     }
 
+    //with help from https://www.devglan.com/spring-boot/spring-boot-file-upload-download
     @GetMapping("/view/{fileId}")
     public ResponseEntity<byte[]> viewAndDownloadFile(@PathVariable Integer fileId, Authentication authentication) {
         Integer userId = this.userService.getUser(authentication.getName()).getUserId();

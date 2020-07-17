@@ -93,6 +93,7 @@ public class FilesCrudTests {
             e.printStackTrace();
         }
 
+        //with help from https://stackoverflow.com/questions/36468876/test-if-a-file-has-been-downloaded-selenium-c-google-chrome
         File getDownloadedFile = getLatestFileFromDir("/Users/kelsey/Downloads");
         String fileName = null;
         if (getDownloadedFile != null) {
